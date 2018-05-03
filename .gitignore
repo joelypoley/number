@@ -1,5 +1,6 @@
 .bazelrc
-bazel-bin/
-bazel-genfiles/
-bazel-out/
+bazel-bin
+bazel-genfiles
+bazel-out
 bazel-number
+bazel-testlogs
