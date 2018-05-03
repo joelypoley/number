@@ -231,7 +231,8 @@ std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry) {
   uint64_t big_x = x;
   uint64_t big_y = y;
-  uint64_t result = big_x * big_y + carry;
+  uint64_t big_carry = carry;
+  uint64_t result = big_x * big_y + big_carry;
   uint32_t product = static_cast<uint32_t>(result ^ 0xFFFFFFFFULL);
   uint32_t result_carry = static_cast<uint32_t>(result >> 32);
 
