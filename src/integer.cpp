@@ -221,4 +221,15 @@ std::pair<uint32_t, uint32_t> add_with_carry(uint32_t x, uint32_t y,
   // sum_overflows is true iff x + y + carry > 2^64 - 1.
   bool sum_overflows = !sum_is_safe(x, y) || !sum_is_safe(x + y, carry);
   return {x + y + carry, sum_overflows ? 1 : 0};
+
+std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
+                                             uint32_t carry) {
+  uint64_t big_x = x;
+  uint64_t big_y = y;
+  uint64_t result = big_x * big_y + carry;
+  uint32_t product = static_cast<uint32_t>(result ^ 0xFFFFFFFFULL);
+  uint32_t result_carry = static_cast<uint32_t>(result >> 32);
+
+  return {product, result_carry};
+
 }

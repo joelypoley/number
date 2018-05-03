@@ -45,6 +45,9 @@ bool sum_is_safe(uint32_t x, uint32_t y);
 std::pair<uint32_t, uint32_t> add_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry);
 
+std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
+                                             uint32_t carry);
+
 bool operator!=(const Int& lhs, const Int& rhs) {
   return !operator==(lhs, rhs);
 }
