@@ -122,7 +122,6 @@ Int& Int::operator+=(const Int& rhs) {
 }
 
 Int& Int::operator-=(const Int& rhs) {
-  // Only implemented for positive integers, where the result is positive.
   operator+=(-rhs);
   return *this;
 }
@@ -218,9 +217,15 @@ bool sum_is_safe(uint32_t x, uint32_t y) {
 std::pair<uint32_t, uint32_t> add_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry) {
   assert(carry == 0 || carry == 1);
-  // sum_overflows is true iff x + y + carry > 2^64 - 1.
-  bool sum_overflows = !sum_is_safe(x, y) || !sum_is_safe(x + y, carry);
-  return {x + y + carry, sum_overflows ? 1 : 0};
+  uint64_t big_x = x;
+  uint64_t big_y = y;
+  uint64_t big_carry = carry;
+  uint64_t result = big_x + big_y + big_carry;
+  uint32_t sum = static_cast<uint32_t>(result & 0xFFFFFFFFULL);
+  uint32_t result_carry = static_cast<uint32_t>(result >> 32);
+
+  return {sum, result_carry};
+}
 
 std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry) {

@@ -34,7 +34,7 @@ class Int {
   // Implements the borrowing method used in the subtraction algorithm you learn
   // in primary school. The input is the index of the digit to borrow from.
   void borrow_from_neighbour(int neighbour);
-  
+
   void add_ignoring_sign(const Int& rhs);
   void subtract_ignoring_sign(const Int& rhs);
   void remove_leading_zeros();
