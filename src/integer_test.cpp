@@ -14,16 +14,6 @@ const uint32_t max_int32_t = std::numeric_limits<int32_t>::max();
 const uint32_t min_int32_t = std::numeric_limits<int32_t>::min();
 const uint32_t max_uint32_t = std::numeric_limits<uint32_t>::max();
 
-template <typename T>
-std::ostream& operator<<(std::ostream& out, const std::vector<T>& v) {
-  if (!v.empty()) {
-    out << '[';
-    std::copy(v.begin(), v.end(), std::ostream_iterator<T>(out, ", "));
-    out << "\b\b]";
-  }
-  return out;
-}
-
 TEST(IntTest, ConstructorFromInt) {
   const Int a{0};
   const std::vector<uint32_t> a_digits{0};
