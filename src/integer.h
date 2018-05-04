@@ -22,6 +22,7 @@ class Int {
   int sign() const { return is_negative ? -1 : 1; }
   std::vector<uint32_t> get_digits() const { return digits; }
   std::string debug_string() const;
+  void shift_by(int i);
 
  private:
   // True if integer is strictly less than 0.
@@ -38,6 +39,7 @@ class Int {
   void add_ignoring_sign(const Int& rhs);
   void subtract_ignoring_sign(const Int& rhs);
   void remove_leading_zeros();
+  Int multiply_ignoring_sign(Int x, uint32_t y);
 };
 
 bool sum_is_safe(uint32_t x, uint32_t y);
@@ -46,7 +48,7 @@ std::pair<uint32_t, uint32_t> add_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry);
 
 std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
-                                             uint32_t carry);
+                                                  uint32_t carry);
 
 bool operator!=(const Int& lhs, const Int& rhs) {
   return !operator==(lhs, rhs);

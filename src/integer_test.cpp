@@ -298,3 +298,32 @@ TEST(IntTest, Subtraction) {
   EXPECT_EQ(a - c, -b);
   EXPECT_EQ(c - a, b);
 }
+
+TEST(IntTest, Multiply) {
+  Int negative_two{-2};
+  Int negative_one{-1};
+  Int zero{0};
+  Int one{1};
+  Int two{2};
+
+  EXPECT_EQ(negative_two * 0, 0);
+  EXPECT_EQ(one * 1, 1);
+  EXPECT_EQ(zero * zero, zero);
+  EXPECT_EQ(negative_one * -1, 1);
+  EXPECT_EQ(2 * negative_two, -4);
+
+  const Int d{"4294967295"};
+  const Int e{"4294967296"};
+  const Int f{"18446744069414584320"};
+  EXPECT_EQ(e * d, f);
+
+  const Int a{"6277101735386680763835789423207666416120802188576398770185"};
+  const Int b{"6277101735386680763835789423207666416120802188576398770190"};
+  const Int c{"12554203470773361527671578846415332832241604377152797540375"};
+  const Int g{"39402006196394479212279040100143613805311323449425358098948520230480997516338667371973139355530553882773662438785150"};
+
+  EXPECT_EQ(a * b, g);
+  EXPECT_EQ(-a * b, -g);
+  EXPECT_EQ(a * -b, -g);
+  EXPECT_EQ(-a * -b, g);
+}

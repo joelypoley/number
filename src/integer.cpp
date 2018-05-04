@@ -128,11 +128,18 @@ Int& Int::operator-=(const Int& rhs) {
 
 Int& Int::operator*=(const Int& rhs) {
   // Only implemented for positive integers, where the result is positive.
-  Int orig = *this;
-  for (int i = 1; i < rhs; i += 1) {
-    add_ignoring_sign(orig);
+  Int result = 0;
+  for (int i = 0; i < rhs.digits.size(); ++i) {
+    Int single_multiplication = multiply_ignoring_sign(*this, rhs.digits[i]);
+    single_multiplication.shift_by(i);
+    result += single_multiplication;
   }
+  result.is_negative = is_negative;
+  *this = result;
   is_negative ^= rhs.is_negative;
+  if (digits.size() == 1 && digits[0] == 0) {
+    is_negative = false;
+  }
   return *this;
 }
 
@@ -208,6 +215,31 @@ void Int::remove_leading_zeros() {
   if (digits.empty()) {
     digits.push_back(0);
   }
+}
+
+Int Int::multiply_ignoring_sign(Int x, const uint32_t y) {
+  x.is_negative = false;
+  uint32_t carry = 0;
+  for (int i = 0; i < x.digits.size(); ++i) {
+    std::tie(x.digits[i], carry) = multiply_with_carry(x.digits[i], y, carry);
+  }
+  if (carry != 0) {
+    x.digits.push_back(carry);
+  }
+  return x;
+}
+
+void Int::shift_by(int i) {
+  assert(i >= 0);
+  if (*this == 0) {
+    return;
+  }
+
+  for (int j = 0; j < i; ++j) {
+    digits.push_back(0);
+  }
+
+  std::rotate(digits.rbegin(), digits.rbegin() + i, digits.rend());
 }
 
 bool sum_is_safe(uint32_t x, uint32_t y) {
