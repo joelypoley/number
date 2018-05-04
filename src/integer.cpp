@@ -249,25 +249,25 @@ bool sum_is_safe(uint32_t x, uint32_t y) {
 std::pair<uint32_t, uint32_t> add_with_carry(uint32_t x, uint32_t y,
                                              uint32_t carry) {
   assert(carry == 0 || carry == 1);
-  uint64_t big_x = x;
-  uint64_t big_y = y;
-  uint64_t big_carry = carry;
-  uint64_t result = big_x + big_y + big_carry;
-  uint32_t sum = static_cast<uint32_t>(result & 0xFFFFFFFFULL);
-  uint32_t result_carry = static_cast<uint32_t>(result >> 32);
+  const uint64_t big_x = x;
+  const uint64_t big_y = y;
+  const uint64_t big_carry = carry;
+  const uint64_t result = big_x + big_y + big_carry;
+  const uint32_t sum = static_cast<uint32_t>(result & 0xFFFFFFFFULL);
+  const uint32_t result_carry = static_cast<uint32_t>(result >> 32);
 
   return {sum, result_carry};
 }
 
-std::pair<uint32_t, uint32_t> multiply_with_carry(uint32_t x, uint32_t y,
-                                             uint32_t carry) {
-  uint64_t big_x = x;
-  uint64_t big_y = y;
-  uint64_t big_carry = carry;
-  uint64_t result = big_x * big_y + big_carry;
-  uint32_t product = static_cast<uint32_t>(result ^ 0xFFFFFFFFULL);
-  uint32_t result_carry = static_cast<uint32_t>(result >> 32);
+std::pair<uint32_t, uint32_t> multiply_with_carry(const uint32_t x,
+                                                  const uint32_t y,
+                                                  const uint32_t carry) {
+  const uint64_t big_x = x;
+  const uint64_t big_y = y;
+  const uint64_t big_carry = carry;
+  const uint64_t result = big_x * big_y + big_carry;
+  const uint32_t product = static_cast<uint32_t>(result & 0xFFFFFFFFULL);
+  const uint32_t result_carry = static_cast<uint32_t>(result >> 32);
 
   return {product, result_carry};
-
 }
