@@ -127,7 +127,6 @@ Int& Int::operator-=(const Int& rhs) {
 }
 
 Int& Int::operator*=(const Int& rhs) {
-  // Only implemented for positive integers, where the result is positive.
   Int result = 0;
   for (int i = 0; i < rhs.digits.size(); ++i) {
     Int single_multiplication = multiply_ignoring_sign(*this, rhs.digits[i]);
