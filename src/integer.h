@@ -23,7 +23,7 @@ class Int {
   std::vector<uint32_t> get_digits() const { return digits; }
   std::string debug_string() const;
   void shift_by(int i);
-
+  Int mod(const Int& rhs) const;
  private:
   // True if integer is strictly less than 0.
   bool is_negative;

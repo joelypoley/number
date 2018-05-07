@@ -286,6 +286,11 @@ void Int::shift_by(int i) {
   std::rotate(digits.rbegin(), digits.rbegin() + i, digits.rend());
 }
 
+Int Int::mod(const Int& rhs) const {
+  assert(rhs > 0);
+  return *this - rhs * (*this / rhs);
+}
+
 bool sum_is_safe(uint32_t x, uint32_t y) {
   return y <= std::numeric_limits<uint32_t>::max() - x;
 }
