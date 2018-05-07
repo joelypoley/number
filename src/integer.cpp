@@ -94,7 +94,7 @@ bool less_in_magnitude(const Int& lhs, const Int& rhs) {
     for (int i = lhs.digits.size() - 1; i >= 0; --i) {
       if (lhs.digits[i] < rhs.digits[i]) {
         return true;
-      } else if (lhs.digits[i] < rhs.digits[i]) {
+      } else if (lhs.digits[i] > rhs.digits[i]) {
         return false;
       }
     }
