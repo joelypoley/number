@@ -24,6 +24,7 @@ class Int {
   std::string debug_string() const;
   void shift_by(int i);
   Int mod(const Int& rhs) const;
+  Int& reduce_mod(const Int& rhs);
  private:
   // True if integer is strictly less than 0.
   bool is_negative;

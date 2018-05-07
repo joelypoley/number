@@ -291,6 +291,11 @@ Int Int::mod(const Int& rhs) const {
   return *this - rhs * (*this / rhs);
 }
 
+Int& Int::reduce_mod(const Int& rhs) {
+  *this = mod(rhs);
+  return *this;
+}
+
 bool sum_is_safe(uint32_t x, uint32_t y) {
   return y <= std::numeric_limits<uint32_t>::max() - x;
 }
