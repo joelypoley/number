@@ -296,6 +296,30 @@ Int& Int::reduce_mod(const Int& rhs) {
   return *this;
 }
 
+std::string Int::print() const {
+  // Currently only workd for positive integers.
+  if (*this == 0) {
+    return "0";
+  }
+  std::string result;
+  Int this_copy = *this;
+  this_copy.is_negative = false;
+  while (this_copy != 0) {
+    Int next_digit = this_copy.mod(10);
+    for (int i = 0; i < 10; ++i) {
+      if (i == next_digit) {
+        result += std::to_string(i);
+      }
+    }
+    this_copy /= 10;
+  }
+  if (is_negative) {
+    result += "-";
+  }
+  std::reverse(result.begin(), result.end());
+  return result;
+}
+
 bool sum_is_safe(uint32_t x, uint32_t y) {
   return y <= std::numeric_limits<uint32_t>::max() - x;
 }
