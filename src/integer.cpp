@@ -144,13 +144,13 @@ Int& Int::operator*=(const Int& rhs) {
 
 Int& Int::operator/=(const Int& rhs) {
   // Only implemented for positive integers, where the result is positive.
-  Int orig = *this;
-  Int res = 0;
-  while (orig > rhs) {
-    orig -= rhs;
-    res += 1;
-  }
-  *this = res;
+  Int internal_rhs = rhs;
+  const bool this_is_negative = is_negative;
+  const bool rhs_is_negative = internal_rhs.is_negative;
+  is_negative = false;
+  internal_rhs.is_negative = false;
+  divide_ignoring_sign(internal_rhs);
+  is_negative = this_is_negative ^ rhs_is_negative;
   return *this;
 }
 
@@ -228,6 +228,51 @@ Int Int::multiply_ignoring_sign(Int x, const uint32_t y) {
   return x;
 }
 
+void Int::divide_ignoring_sign(const Int& rhs) {
+  // Assumes that *this is nonegative and and rhs is positive.
+  assert(rhs != 0);
+  if (*this < rhs) {
+    *this = 0;
+    return;
+  }
+  Int lo{0};
+  Int hi{1};
+  hi.shift_by(digits.size() - rhs.digits.size() + 1);
+  Int ans{0};
+  int i = 0;
+  while (lo <= hi) {
+    ++i;
+    Int mid = lo + hi;
+    mid.divide_by_2();
+    if (mid * rhs == *this) {
+      *this = mid;
+      return;
+    } else if (*this < mid * rhs) {
+      hi = mid - 1;
+    } else if (*this > mid * rhs) {
+      lo = mid + 1;
+      ans = mid;
+    }
+  }
+  *this = ans;
+}
+
+void Int::divide_by_2() {
+  assert(digits.size() != 0);
+  if (digits.size() == 1) {
+    digits[0] >>= 1;
+    return;
+  }
+  for (int i = 1; i < digits.size(); ++i) {
+    digits[i - 1] >>= 1;
+    uint32_t lsb = digits[i] & 1U;
+    digits[i - 1] |= (lsb << 31);
+  }
+  digits[digits.size() - 1] >>= 1;
+  remove_leading_zeros();
+}
+
+// Multiply by (2^32)^i.
 void Int::shift_by(int i) {
   assert(i >= 0);
   if (*this == 0) {

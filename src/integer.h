@@ -40,6 +40,8 @@ class Int {
   void subtract_ignoring_sign(const Int& rhs);
   void remove_leading_zeros();
   Int multiply_ignoring_sign(Int x, uint32_t y);
+  void divide_ignoring_sign(const Int& rhs);
+  void divide_by_2();
 };
 
 bool sum_is_safe(uint32_t x, uint32_t y);
